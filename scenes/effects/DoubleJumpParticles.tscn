@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdab2w8ef54tg"]
+
+[ext_resource type="Script" path="res://scripts/effects/LandParticles.gd" id="1_fv6or"]
+
+[sub_resource type="Curve" id="Curve_7dgjk"]
+max_value = 20.0
+bake_resolution = 5
+_data = [Vector2(0, 8.36364), 0.0, 15.1579, 0, 0, Vector2(0.454545, 0.363636), -3.72413, 0.0, 0, 0]
+
+[node name="LandParticles" type="CPUParticles2D"]
+position = Vector2(0, -1)
+amount = 10
+lifetime = 0.5
+speed_scale = 2.16
+explosiveness = 0.23
+randomness = 1.0
+lifetime_randomness = 0.28
+local_coords = false
+emission_shape = 2
+emission_rect_extents = Vector2(3, 0)
+direction = Vector2(0, 0)
+spread = 50.0
+gravity = Vector2(0, -7)
+initial_velocity_max = 2.0
+linear_accel_min = -15.22
+linear_accel_max = 29.7
+radial_accel_min = 13.11
+radial_accel_max = 14.02
+radial_accel_curve = SubResource( "Curve_7dgjk" )
+script = ExtResource( "1_fv6or" )
