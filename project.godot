@@ -9,7 +9,17 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Entity",
+"class": &"Enemy",
+"language": &"GDScript",
+"path": "res://scenes/worlds/EnemyBase.gd"
+}, {
 "base": "CharacterBody2D",
+"class": &"Entity",
+"language": &"GDScript",
+"path": "res://scripts/Entity.gd"
+}, {
+"base": "Entity",
 "class": &"Player",
 "language": &"GDScript",
 "path": "res://scripts/Player.gd"
@@ -30,6 +40,8 @@ _global_script_classes=[{
 "path": "res://scripts/gameplay/World.gd"
 }]
 _global_script_class_icons={
+"Enemy": "",
+"Entity": "",
 "Player": "",
 "StateBase": "",
 "StateMachines": "",

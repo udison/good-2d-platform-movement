@@ -1,11 +1,8 @@
-extends CharacterBody2D
+extends Entity
 
 class_name Player
 
-@export var speed: float = 80.0
-
 # Combat
-@export var light_damage: float = 25
 @export var light_damage_seq_mult: float = 1.3
 
 enum AttackStates {
@@ -41,6 +38,7 @@ var landing: bool = false
 @onready var right_hand: Node2D = $RightHand
 @onready var left_hand: Node2D = $LeftHand
 @onready var states: StateMachines = $StateMachines
+@onready var sword: Node2D = right_hand.get_node('Sword')
 
 func _ready():
 	states.init(self)
@@ -55,6 +53,9 @@ func _physics_process(delta):
 		
 		if !landing:
 			landing = true
+			
+	else:
+		landed()
 	
 	# Flips the player
 	handle_horizontal_flip()
@@ -62,7 +63,6 @@ func _physics_process(delta):
 	states.physics_process(delta)
 	
 	move_and_slide()
-	return
 	
 func get_gravity():
 	# When jump is released before jump height is reached
@@ -120,4 +120,8 @@ func just_landed():
 	return is_on_floor() and landing
 	
 func jump_condition():
-	return Input.is_action_just_pressed("jump") and (is_on_floor() || velocity.y < 80 || jump_count < 2)
+	return is_on_floor() || velocity.y < 80 || jump_count < 2
+
+func _on_hit_area_body_entered(body):
+	if body is Enemy:
+		body.take_damage(light_damage)

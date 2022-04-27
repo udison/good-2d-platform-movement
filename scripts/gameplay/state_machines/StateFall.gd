@@ -1,7 +1,7 @@
 extends StateBase
 
 func input(event: InputEvent):
-	if player.jump_condition():
+	if Input.is_action_just_pressed('jump') and player.jump_condition():
 		return State.Jump
 	
 	return State.Null
@@ -12,6 +12,6 @@ func physics_process(delta):
 	
 	if player.is_on_floor():
 		player.landed()
-		return State.Idle
+		return State.Walk
 
 	return State.Null

@@ -1,6 +1,6 @@
 extends StateBase
 
-func input(event: InputEvent):
+func physics_process(delta: float):
 	var direction = Input.get_axis("left", "right")
 	
 	if direction:

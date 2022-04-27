@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c67ivt0t6wtrw"]
+[gd_scene load_steps=18 format=3 uid="uid://c67ivt0t6wtrw"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/World.gd" id="1_ibgkn"]
 [ext_resource type="Script" path="res://scripts/SkyParallaxLayer.gd" id="2_dm6ab"]
@@ -6,9 +6,49 @@
 [ext_resource type="Texture2D" uid="uid://br1khp8y1e7k2" path="res://sprites/parallax/forest02.png" id="4_g7gwx"]
 [ext_resource type="Texture2D" uid="uid://btt8i7xl667cw" path="res://sprites/parallax/forest01.png" id="5_vxs7n"]
 [ext_resource type="Texture2D" uid="uid://lp844lqheygm" path="res://sprites/parallax/forest03.png" id="6_642tk"]
-[ext_resource type="PackedScene" uid="uid://co618g3d3p0mn" path="res://scenes/characters/Player.tscn" id="7_66j6y"]
+[ext_resource type="Script" path="res://scenes/worlds/EnemyBase.gd" id="7_1kndg"]
+[ext_resource type="PackedScene" uid="uid://u0o82to2dpjx" path="res://scenes/characters/Player.tscn" id="7_66j6y"]
 [ext_resource type="Texture2D" uid="uid://c2st411efv5qj" path="res://sprites/tilesets/forest01.png" id="8_akrb5"]
+[ext_resource type="Texture2D" uid="uid://bghrmk7jh5kh4" path="res://sprites/characters/goblin01.png" id="8_om463"]
 [ext_resource type="Script" path="res://scripts/gameplay/Camera.gd" id="9_gvokx"]
+
+[sub_resource type="Animation" id="Animation_qwmo0"]
+resource_name = "Idle"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="Animation" id="Animation_47orm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6h6o5"]
+size = Vector2(6, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8e3up"]
+radius = 49.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t1t0a"]
 resource_name = "Forest"
@@ -311,6 +351,36 @@ texture = ExtResource( "6_642tk" )
 centered = false
 
 [node name="Parallax" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="EnemyBase" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(140, 40)
+collision_layer = 4
+collision_mask = 6
+script = ExtResource( "7_1kndg" )
+
+[node name="Sprite" type="Sprite2D" parent="Enemies/EnemyBase"]
+texture = ExtResource( "8_om463" )
+hframes = 4
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Enemies/EnemyBase"]
+autoplay = "Idle"
+anims/Idle = SubResource( "Animation_qwmo0" )
+anims/RESET = SubResource( "Animation_47orm" )
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Enemies/EnemyBase"]
+visible = false
+position = Vector2(0, 2)
+shape = SubResource( "RectangleShape2D_6h6o5" )
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/EnemyBase"]
+
+[node name="Shape" type="CollisionShape2D" parent="Enemies/EnemyBase/DetectionArea"]
+shape = SubResource( "CircleShape2D_8e3up" )
+
+[node name="RayCast" type="RayCast2D" parent="Enemies/EnemyBase/DetectionArea"]
 
 [node name="Player" parent="." instance=ExtResource( "7_66j6y" )]
 position = Vector2(13, 32)
