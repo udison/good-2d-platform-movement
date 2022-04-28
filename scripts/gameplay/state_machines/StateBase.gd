@@ -2,6 +2,7 @@ extends Node
 class_name StateBase
 
 var player: Player
+var state_manager: StateMachines
 
 enum State {
 	Null,
@@ -14,6 +15,9 @@ enum State {
 
 @export var animation_name: String
 
+func can_enter():
+	return true
+
 func enter():
 	player.anim_player.play(animation_name)
 
@@ -21,10 +25,10 @@ func exit():
 	pass
 
 func input(event: InputEvent):
-	return State.Null
+	pass
 
 func process(delta: float):
-	return State.Null
+	pass
 
 func physics_process(delta: float):
-	return State.Null
+	pass

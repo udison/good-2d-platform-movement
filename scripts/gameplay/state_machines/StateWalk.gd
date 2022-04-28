@@ -2,23 +2,18 @@ extends StateBase
 
 func input(event: InputEvent):
 	if Input.is_action_just_pressed('jump'):
-		return State.Jump
+		state_manager.change_state(State.Jump)
 
 	if Input.is_action_just_pressed('attack'):
-		return State.Attack
-		
-	return State.Null
+		state_manager.change_state(State.Attack)
 	
 func physics_process(delta):
 	# Moves the player
 	player.move()
 	
-
 	# Player is falling
 	if player.velocity.y > 0:
-		return State.Fall
+		state_manager.change_state(State.Fall)
 	
 	if player.velocity.x == 0:
-		return State.Idle
-	
-	return State.Null
+		state_manager.change_state(State.Idle)

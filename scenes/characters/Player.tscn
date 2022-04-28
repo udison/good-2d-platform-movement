@@ -367,7 +367,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_drs0k"]
-size = Vector2(6, 12)
+size = Vector2(8, 11)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e3x5b"]
 radius = 0.69416
@@ -395,8 +395,7 @@ vframes = 5
 frame = 1
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, 2)
+position = Vector2(-1, 2.5)
 shape = SubResource( "RectangleShape2D_drs0k" )
 
 [node name="Feet" type="Node2D" parent="."]
@@ -442,6 +441,7 @@ animation_name = "Walk"
 
 [node name="Jump" type="Node" parent="StateMachines"]
 script = ExtResource( "11_u3mau" )
+animation_name = "Jump"
 
 [node name="Fall" type="Node" parent="StateMachines"]
 script = ExtResource( "12_y8ctw" )

@@ -11,26 +11,28 @@ class_name StateMachines
 
 var current_state: StateBase
 
-func change_state(new_state: int):
-	if current_state:
-		current_state.exit()
-		
-	current_state = states[new_state]
-	current_state.enter()
-	print(current_state.name)
-
 func init(player):
 	for child in get_children():
 		child.player = player
+		child.state_manager = self
 		
 	change_state(StateBase.State.Idle)
 
+func change_state(new_state: int):
+	var state = states[new_state]
+	
+	if !state.can_enter():
+		return
+	
+	if current_state:
+		current_state.exit()
+		
+	current_state = state
+	print(current_state.name)
+	current_state.enter()
+
 func physics_process(delta: float):
-	var new_state = current_state.physics_process(delta)
-	if new_state != StateBase.State.Null:
-		change_state(new_state)
+	current_state.physics_process(delta)
 
 func input(event: InputEvent):
-	var new_state = current_state.input(event)
-	if new_state != StateBase.State.Null:
-		change_state(new_state)
+	current_state.input(event)

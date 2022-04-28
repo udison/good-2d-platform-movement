@@ -106,7 +106,7 @@ func jump():
 			spawn_feet_particles(jump_particle)
 		else:
 			spawn_feet_particles(double_jump_particle)
-		
+
 		# If is double jump
 		if not is_on_floor():
 			can_jump = false
@@ -118,9 +118,6 @@ func spawn_feet_particles(particleScene: PackedScene):
 
 func just_landed():
 	return is_on_floor() and landing
-	
-func jump_condition():
-	return is_on_floor() || velocity.y < 80 || jump_count < 2
 
 func _on_hit_area_body_entered(body):
 	if body is Enemy:
